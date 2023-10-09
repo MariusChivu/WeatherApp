@@ -1,66 +1,70 @@
-<div class="search">
-	<form #form="ngForm" (submit)="onSubmit()">
-		<input type="text" placeholder="Cauta un oras" name="city" [(ngModel)]="cityName">
-	</form>
-</div>
-
-<div class="container" *ngIf="weatherData">
-	<div class="upper-data">
-		<img src="../assets/images/day.png" *ngIf="weatherData.current.temp_c > 15" alt="day">
-		<img src="../assets/images/night.png" *ngIf="weatherData.current.temp_c <= 15" alt="night">
-
-		<div class="weather-data">
-			<img class="location-icon" src="{{ weatherData.forecast.forecastday[0].day.condition.icon }}">
-			<div class="location">{{ weatherData.location.name }}</div>
-			<div class="temperature">{{ weatherData.current.temp_c | number: '1.0-0' }} °C</div>
-		</div>
+<div class="container pb-5 pt-5">
+	<div class="search">
+		<form #form="ngForm" (submit)="onSubmit()">
+			<input type="text" placeholder="Cauta un oras" name="city" [(ngModel)]="cityName">
+		</form>
 	</div>
-	<div class="lower-data">
-		<div class="more-info-label">
-			More information
+
+	<div class="row justify-content-center">
+		<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+			<div class="container-app" *ngIf="weatherData">
+				<div class="upper-data" [style.backgroundImage]="weatherData.current.is_day == 1 ? 'url(assets/images/day.png)' :  'url(assets/images/night.png)'">
+					<div class="weather-data">
+						<img class="location-icon" src="{{ weatherData.forecast.forecastday[0].day.condition.icon }}" alt="{{ weatherData.location.name }}">
+						<div class="location">{{ weatherData.location.name }}</div>
+						<div class="temperature">{{ weatherData.current.temp_c | number: '1.0-0' }} °C</div>
+						<div class="location">{{ weatherData.location.localtime | date: 'dd.M.Y H:m' }}</div>
+					</div>
+				</div>
+				<div class="lower-data">
+					<div class="more-info-label">
+						More information
+					</div>
+					<div class="more-info-container">
+						<div class="info-block">
+							<div class="info-block-label">
+								<i class="fad fa-temperature-frigid" style="--fa-primary-color: #7aabff; --fa-secondary-color: #fff; --fa-secondary-opacity: 0.4;"></i>
+								<span>min</span>
+							</div>
+							<div class="info-block-value">
+								{{ weatherData.forecast.forecastday[0].day.mintemp_c | number: '1.0-0' }} °C
+							</div>
+						</div>
+
+						<div class="info-block">
+							<div class="info-block-label">
+								<i class="fad fa-temperature-hot" style="--fa-primary-color: #ffae00; --fa-secondary-color: #ffffff;"></i>
+								<span>max</span>
+							</div>
+							<div class="info-block-value">
+								{{ weatherData.forecast.forecastday[0].day.maxtemp_c | number: '1.0-0' }} °C
+							</div>
+						</div>
+
+						<div class="info-block">
+							<div class="info-block-label">
+								<i class="fad fa-humidity" style="--fa-primary-color: #ffffff; --fa-secondary-color: #7aabff; --fa-secondary-opacity: 1;"></i>
+								<span>humidity</span>
+							</div>
+							<div class="info-block-value">
+								{{ weatherData.forecast.forecastday[0].day.avghumidity | number: '1.0-0' }}%
+							</div>
+						</div>
+
+						<div class="info-block">
+							<div class="info-block-label">
+								<i class="fad fa-wind" style="--fa-primary-color: #7aabff; --fa-secondary-color: #ffffff;"></i>
+								<span>wind</span>
+							</div>
+							<div class="info-block-value">
+								{{ weatherData.current.wind_kph | number: '1.0-0' }} km/h
+							</div>
+						</div>
+					</div>
+					<span class="mc"><a href="https://github.com/MariusChivu" target="_blank"><i class="fab fa-github"></i> Marius Chivu</a></span>
+				</div>
+			</div>
 		</div>
-		<div class="more-info-container">
-			<div class="info-block">
-				<div class="info-block-label">
-					<i class="fad fa-temperature-frigid" style="--fa-primary-color: #7aabff; --fa-secondary-color: #fff; --fa-secondary-opacity: 0.4;"></i>
-					<span>min</span>
-				</div>
-				<div class="info-block-value">
-					{{ weatherData.forecast.forecastday[0].day.mintemp_c }} °C
-				</div>
-			</div>
-
-			<div class="info-block">
-				<div class="info-block-label">
-					<i class="fad fa-temperature-hot" style="--fa-primary-color: #ffae00; --fa-secondary-color: #ffffff;"></i>
-					<span>max</span>
-				</div>
-				<div class="info-block-value">
-					{{ weatherData.forecast.forecastday[0].day.maxtemp_c }} °C
-				</div>
-			</div>
-
-			<div class="info-block">
-				<div class="info-block-label">
-					<i class="fad fa-humidity" style="--fa-primary-color: #ffffff; --fa-secondary-color: #7aabff; --fa-secondary-opacity: 1;"></i>
-					<span>humidity</span>
-				</div>
-				<div class="info-block-value">
-					{{ weatherData.forecast.forecastday[0].day.avghumidity }}%
-				</div>
-			</div>
-
-			<div class="info-block">
-				<div class="info-block-label">
-					<i class="fad fa-wind" style="--fa-primary-color: #7aabff; --fa-secondary-color: #ffffff;"></i>
-					<span>wind</span>
-				</div>
-				<div class="info-block-value">
-					{{ weatherData.current.wind_kph }} km/h
-				</div>
-			</div>
-		</div>
-		
 	</div>
 </div>
 
